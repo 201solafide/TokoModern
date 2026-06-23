@@ -44,6 +44,8 @@ Public Class FormKasir
     Sub HitungGrandTotal()
         Dim total As Decimal = 0 'MENYIMPAN NILAI JUMLAH 
 
+
+
         'MELAKLUKAN LOOPING UNTUK SETIAP BARIS DI GRIDVIEW
         For i As Integer = 0 To dgvKeranjang.Rows.Count - 1
             'melewatkan baris kosong baru jika ada
@@ -56,6 +58,9 @@ Public Class FormKasir
         lblGrandTotal.Text = "Rp." & total.ToString("N0")
 
     End Sub
+
+
+    Public stokBarang As Integer = 0 'inisiasi variabel yang menyimpan stok barang
 
     'KONDISI SAAT FORM KASIR TERBUKA
     Private Sub FormKasir_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -74,6 +79,7 @@ Public Class FormKasir
             Try
                 OpenKoneksi()
                 Dim queryCariKode As String = "SELECT nama_barang, harga_jual, stok FROM barang where kode_barang = @kode"
+
                 cmd = New NpgsqlCommand(queryCariKode, koneksi)
                 cmd.Parameters.AddWithValue("@kode", txtCariKode.Text)
                 dr = cmd.ExecuteReader() 'UNTUK MEMBACA KODE BARANG YANG DIMAUSKKAN DI GRID VIEW tersedia ada di database
@@ -81,6 +87,9 @@ Public Class FormKasir
                 If dr.Read() Then
                     'CEK STOK BARANG TERLEBIH DAHULU SEBELUM DIJUAL
                     Dim stokGudang As Integer = Convert.ToInt32(dr("stok")) 'VARIABEL MENYIMPAN DATA STOK dari parameter stok di tableNYA (SI BARANG)
+                    stokBarang = stokGudang 'untuk menitipkan data dari table db ke variabel global/public
+
+
                     If stokGudang <= 0 Then
                         MsgBox("Maaf stok barang habis")
                         txtCariKode.Clear()
@@ -104,6 +113,7 @@ Public Class FormKasir
         End If
     End Sub
 
+    'KONDISI JIKA TOMBOL TAMBAH di klik
     Private Sub btnTambah_Click(sender As Object, e As EventArgs) Handles btnTambah.Click
         If txtNamaBarang.Text = "" Then
             MsgBox("Cari barangnya dulu:")
@@ -114,8 +124,11 @@ Public Class FormKasir
 
         'HITUNG subtotal untuk barang (harga x jumlah)
         Dim hargaAsli As Decimal = Convert.ToDecimal(txtHarga.Text)
-        Dim jumlah As Integer = Convert.ToInt32(txtJumlah.Text)
+        Dim jumlahBaru As Integer = Convert.ToInt32(txtJumlah.Text)
+        Dim jumlahLama As Integer = 0
         Dim hargaNet As Decimal
+        Dim subtotal As Decimal
+
         'LOGIC JIKA PROMOSI BARANG
         Dim diskonPromosi As Decimal = ClassPromosiDiskon.CekStatusPromosi(txtCariKode.Text)
 
@@ -129,10 +142,52 @@ Public Class FormKasir
             hargaNet = hargaAsli
         End If
 
-        Dim subtotal As Decimal = hargaNet * jumlah
+        Dim cekKodeBarangGrid As Boolean = False
+        Dim posisiBaris As Integer = -1
+        Dim totalYangDiminta As Integer = 0
 
+        For i As Integer = 0 To dgvKeranjang.Rows.Count - 1
+            If dgvKeranjang.Rows(i).IsNewRow Then Continue For
+
+            Dim kodeBarang As String = dgvKeranjang.Rows(i).Cells("colKode").Value.ToString
+
+
+            'BANDINGKAN variabel kodeBarang yang menyimpan data kodeBarang di grid dengan variabel txtCariKode represetnasi text yang mencari kode data di form input
+            If kodeBarang = txtCariKode.Text Then
+                cekKodeBarangGrid = True
+                posisiBaris = i 'Mengambil nilai index untuk setiap baris grid
+                jumlahLama = Convert.ToInt32(dgvKeranjang.Rows(posisiBaris).Cells("colJumlah").Value)
+                Exit For
+
+            End If
+        Next
+
+        'SETELAH PENGECEKKAN KONDISI LOOPING
+        'variabel posisi baris saat ini sudah menyimpan value index (posisi baris)
+        If cekKodeBarangGrid = True Then
+            totalYangDiminta = jumlahLama + jumlahBaru
+        Else
+            totalYangDiminta = jumlahBaru
+        End If
+
+        ' 2. VALIDASI STOK TERLEBIH DAHULU (Paling Aman)
+        If totalYangDiminta > stokBarang Then
+            ' Jika tidak cukup, langsung tolak di sini. Grid tidak akan diganggu/dihapus
+            MsgBox("Transaksi ditolak, stok di gudang tersisa " & stokBarang & " pcs, sedangkan total yang diminta " & totalYangDiminta & " pcs", MsgBoxStyle.Exclamation, "Stok tidak cukup")
+            Exit Sub
+        End If
+
+        ' 3. JIKA STOK AMAN, BARU UPDATE ATAU TAMBAH BARIS KE GRID
+        If cekKodeBarangGrid = True Then
+            Dim subtotalBaru = hargaNet * totalYangDiminta ' Gunakan totalYangDiminta yang sudah valid
+
+            dgvKeranjang.Rows(posisiBaris).Cells("colJumlah").Value = totalYangDiminta
+            dgvKeranjang.Rows(posisiBaris).Cells("colSubTotal").Value = subtotalBaru
+        Else
+            subtotal = hargaNet * jumlahBaru
+            dgvKeranjang.Rows.Add(txtCariKode.Text, txtNamaBarang.Text, hargaAsli, jumlahBaru, subtotal)
+        End If
         'MASUKKAN DATA ke jumlah
-        dgvKeranjang.Rows.Add(txtCariKode.Text, txtNamaBarang.Text, hargaAsli, jumlah, subtotal)
 
         'HITUNG ULANG GRAND TOTAL BELANJAAN
         HitungGrandTotal()
@@ -168,6 +223,7 @@ Public Class FormKasir
         Dim teksTotalBersih As String = teksInputBayar.Replace("Rp.", "").Replace(".", "").Trim()
         Dim grandTotalBersih As String = Convert.ToDecimal(teksTotalBersih)
         Dim uangBayar As Decimal = Convert.ToDecimal(txtBayar.Text.Trim())
+
 
         ' Trik membersihkan karakter titik/koma yang mungkin diketik user sebagai pemisah ribuan
         Dim teksBayarBersih As String = txtBayar.Text.Replace(".", "").Replace(",", "").Trim()
