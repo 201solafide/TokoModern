@@ -323,4 +323,31 @@ Public Class FormKasir
         End If
     End Sub
 
+    Private Sub btnEditKeranjang_Click(sender As Object, e As EventArgs) Handles btnEditKeranjang.Click
+
+    End Sub
+
+    Private Sub btnHapusKeranjang_Click(sender As Object, e As EventArgs) Handles btnHapusKeranjang.Click
+        '1.validasi bahwa baris di keranjang telah diklik
+        If dgvKeranjang.CurrentRow Is Nothing OrElse dgvKeranjang.SelectedRows.Count = 0 Then
+            MsgBox("Klik/Pilih baris keranjang yg perlu dihapus terlebih dahulu", MsgBoxStyle.Critical)
+            Exit Sub
+        End If
+
+        '2. Ambil index baris yang sedang aktif dipilih oleh kasir
+        Dim indexBarisKlikKeranjang As Integer = dgvKeranjang.CurrentRow.Index
+
+        '3. Konfirmasi keamanan agar tidak sengaja terhapus
+        Dim konfirmasi As DialogResult = MsgBox("Apakah anda yakin menghapus item ini?", MsgBoxStyle.YesNo + MsgBoxStyle.Question, "Cancel item")
+
+        If konfirmasi = DialogResult.Yes Then
+            ' MENGHAPUS BARIS BERDASARKAN INDEKSNYA 
+            dgvKeranjang.Rows.RemoveAt(indexBarisKlikKeranjang)
+
+            ' MENGHITUNG ULANG GRAND TOTAL NYA sehingga terupdate
+            HitungGrandTotal()
+
+            MsgBox("Item berhasil dihapus dari keranjang.", MsgBoxStyle.Information)
+        End If
+    End Sub
 End Class

@@ -22,6 +22,8 @@ Partial Class FormKasir
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormKasir))
         Me.txtNota = New System.Windows.Forms.TextBox()
         Me.txtCariKode = New System.Windows.Forms.TextBox()
         Me.txtNamaBarang = New System.Windows.Forms.TextBox()
@@ -38,6 +40,9 @@ Partial Class FormKasir
         Me.lblGrandTotal = New System.Windows.Forms.Label()
         Me.lblKembali = New System.Windows.Forms.Label()
         Me.btnSimpanTransaksi = New System.Windows.Forms.Button()
+        Me.btnEditKeranjang = New System.Windows.Forms.Button()
+        Me.btnHapusKeranjang = New System.Windows.Forms.Button()
+        Me.ImgTrashEdit = New System.Windows.Forms.ImageList(Me.components)
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -157,7 +162,7 @@ Partial Class FormKasir
         'txtBayar
         '
         Me.txtBayar.Font = New System.Drawing.Font("MV Boli", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBayar.Location = New System.Drawing.Point(1115, 129)
+        Me.txtBayar.Location = New System.Drawing.Point(1116, 178)
         Me.txtBayar.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtBayar.Multiline = True
         Me.txtBayar.Name = "txtBayar"
@@ -168,7 +173,7 @@ Partial Class FormKasir
         '
         Me.lblGrandTotal.AutoSize = True
         Me.lblGrandTotal.Font = New System.Drawing.Font("MV Boli", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblGrandTotal.Location = New System.Drawing.Point(1107, 61)
+        Me.lblGrandTotal.Location = New System.Drawing.Point(1108, 110)
         Me.lblGrandTotal.Name = "lblGrandTotal"
         Me.lblGrandTotal.Size = New System.Drawing.Size(103, 45)
         Me.lblGrandTotal.TabIndex = 8
@@ -178,7 +183,7 @@ Partial Class FormKasir
         '
         Me.lblKembali.AutoSize = True
         Me.lblKembali.Font = New System.Drawing.Font("MV Boli", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblKembali.Location = New System.Drawing.Point(1107, 240)
+        Me.lblKembali.Location = New System.Drawing.Point(1108, 289)
         Me.lblKembali.Name = "lblKembali"
         Me.lblKembali.Size = New System.Drawing.Size(99, 45)
         Me.lblKembali.TabIndex = 9
@@ -188,7 +193,7 @@ Partial Class FormKasir
         '
         Me.btnSimpanTransaksi.BackColor = System.Drawing.SystemColors.InactiveCaption
         Me.btnSimpanTransaksi.Font = New System.Drawing.Font("MV Boli", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSimpanTransaksi.Location = New System.Drawing.Point(1115, 306)
+        Me.btnSimpanTransaksi.Location = New System.Drawing.Point(1116, 355)
         Me.btnSimpanTransaksi.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSimpanTransaksi.Name = "btnSimpanTransaksi"
         Me.btnSimpanTransaksi.Size = New System.Drawing.Size(253, 59)
@@ -196,11 +201,42 @@ Partial Class FormKasir
         Me.btnSimpanTransaksi.Text = "Cetak Nota"
         Me.btnSimpanTransaksi.UseVisualStyleBackColor = False
         '
+        'btnEditKeranjang
+        '
+        Me.btnEditKeranjang.ImageIndex = 1
+        Me.btnEditKeranjang.ImageList = Me.ImgTrashEdit
+        Me.btnEditKeranjang.Location = New System.Drawing.Point(1111, 21)
+        Me.btnEditKeranjang.Name = "btnEditKeranjang"
+        Me.btnEditKeranjang.Size = New System.Drawing.Size(39, 35)
+        Me.btnEditKeranjang.TabIndex = 11
+        Me.btnEditKeranjang.UseVisualStyleBackColor = True
+        '
+        'btnHapusKeranjang
+        '
+        Me.btnHapusKeranjang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
+        Me.btnHapusKeranjang.ImageIndex = 0
+        Me.btnHapusKeranjang.ImageList = Me.ImgTrashEdit
+        Me.btnHapusKeranjang.Location = New System.Drawing.Point(1156, 21)
+        Me.btnHapusKeranjang.Name = "btnHapusKeranjang"
+        Me.btnHapusKeranjang.Size = New System.Drawing.Size(42, 35)
+        Me.btnHapusKeranjang.TabIndex = 12
+        Me.btnHapusKeranjang.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.btnHapusKeranjang.UseVisualStyleBackColor = True
+        '
+        'ImgTrashEdit
+        '
+        Me.ImgTrashEdit.ImageStream = CType(resources.GetObject("ImgTrashEdit.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImgTrashEdit.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImgTrashEdit.Images.SetKeyName(0, "trash.png")
+        Me.ImgTrashEdit.Images.SetKeyName(1, "edit.png")
+        '
         'FormKasir
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1478, 909)
+        Me.Controls.Add(Me.btnHapusKeranjang)
+        Me.Controls.Add(Me.btnEditKeranjang)
         Me.Controls.Add(Me.btnSimpanTransaksi)
         Me.Controls.Add(Me.lblKembali)
         Me.Controls.Add(Me.lblGrandTotal)
@@ -238,4 +274,7 @@ Partial Class FormKasir
     Friend WithEvents colHarga As DataGridViewTextBoxColumn
     Friend WithEvents colJumlah As DataGridViewTextBoxColumn
     Friend WithEvents colSubTotal As DataGridViewTextBoxColumn
+    Friend WithEvents btnEditKeranjang As Button
+    Friend WithEvents ImgTrashEdit As ImageList
+    Friend WithEvents btnHapusKeranjang As Button
 End Class
