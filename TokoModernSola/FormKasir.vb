@@ -146,17 +146,16 @@ Public Class FormKasir
         Dim posisiBaris As Integer = -1
         Dim totalYangDiminta As Integer = 0
 
-        For i As Integer = 0 To dgvKeranjang.Rows.Count - 1
-            If dgvKeranjang.Rows(i).IsNewRow Then Continue For
+        For i As Integer = 0 To dgvKeranjang.Rows.Count - 1  'MELAKUKAN LOOPING DARI INDEKS KE-0 Hingga banyak baris grid tabel - 1 (dikurang 1, karena index mulai dari 0 - 9)
+            If dgvKeranjang.Rows(i).IsNewRow Then Continue For 'UNTUK KONDISI JIKA BARIS TERSEBUT KOSONG / TIDAK ADA SATUPUN VALUE/NILAI DI KOLOM
 
-            Dim kodeBarang As String = dgvKeranjang.Rows(i).Cells("colKode").Value.ToString
-
+            Dim kodeBarang As String = dgvKeranjang.Rows(i).Cells("colKode").Value.ToString 'variabel kodeBarang menyimpan data VALUE dari kolom colKode di tabel grid
 
             'BANDINGKAN variabel kodeBarang yang menyimpan data kodeBarang di grid dengan variabel txtCariKode represetnasi text yang mencari kode data di form input
             If kodeBarang = txtCariKode.Text Then
-                cekKodeBarangGrid = True
-                posisiBaris = i 'Mengambil nilai index untuk setiap baris grid
-                jumlahLama = Convert.ToInt32(dgvKeranjang.Rows(posisiBaris).Cells("colJumlah").Value)
+                cekKodeBarangGrid = True  'VARIABEL YANG MENYIMPAN KONDISI variabel value kodeBarang = value txtcariKode
+                posisiBaris = i 'Mengambil nilai index untuk setiap baris grid 'MENYIMPAN nilai index untuk setiap baris
+                jumlahLama = Convert.ToInt32(dgvKeranjang.Rows(posisiBaris).Cells("colJumlah").Value) 'variabel jumlahLama menyimpan value dari colJumlah di tabel grid nya
                 Exit For
 
             End If
@@ -299,6 +298,7 @@ Public Class FormKasir
             dgvKeranjang.Rows.Clear()
             lblGrandTotal.Text = "Rp.0"
             txtBayar.Text = "0"
+            lblKembali.Text = "Rp.0"
             BuatNotaOtomatis()
             txtCariKode.Focus()
 
@@ -324,6 +324,75 @@ Public Class FormKasir
     End Sub
 
     Private Sub btnEditKeranjang_Click(sender As Object, e As EventArgs) Handles btnEditKeranjang.Click
+
+        '1. Validasi bahwa baris di keranjang telah diklik
+        If dgvKeranjang.CurrentRow Is Nothing OrElse dgvKeranjang.SelectedRows.Count = 0 Then
+            MsgBox("Klik/Pilih baris keranjang yg perlu dihapus terlebih dahulu", MsgBoxStyle.Critical)
+            Exit Sub
+
+        End If
+
+        Dim hasilInput As String = InputBox("Edit jumlah: ", "Edit Jumlah")
+
+        Dim totalYangDiminta As Integer = 0
+        Dim jumlahBaru As Integer = Convert.ToInt32(txtJumlah.Text)
+        Dim jumlahBaruYangDiminta As Integer = Convert.ToInt32(hasilInput)
+        Dim hargaNet As Decimal = 0
+
+        MsgBox("Hasil yang print = " & jumlahBaruYangDiminta)
+
+        'CEK DULU JUMLAH BARU YANG DIMINTA > 0
+        If jumlahBaruYangDiminta < 0 Then
+            MsgBox("Jumlah yang diminta harus lebih dari 0!!!!", MsgBoxStyle.Information, "Jumlah")
+            Exit Sub
+        End If
+
+        'KONDISI DIATAS MEMVALIDASI BAHWA ALUR DAN PARAMTER INPUTA AWAL SUDAH SESUAI
+
+
+        Try
+            ' AMBIL INDEX BARIS YANG SEDANG AKTIF DIPILIH SAAT INI oleh kasir
+            Dim barisKlikKeranjang As DataGridViewRow = dgvKeranjang.CurrentRow
+            Dim kodeBarangGrid As String = barisKlikKeranjang.Cells("colKode").Value.ToString()
+
+            'Ambil HARGA ASLI
+            Dim hargaAsli As Decimal = Convert.ToDecimal(barisKlikKeranjang.Cells("colHarga").Value) 'KENAPA YANG DIGUANKAN barisKlikKeranjang karena merepresentasikan baris dan segala value baris(row)
+            'CEK DISKON DENGAN MEMANGGIL FUNGSI
+            Dim diskonPromosi As Decimal = ClassPromosiDiskon.CekStatusPromosi(txtCariKode.Text)
+
+            If diskonPromosi > 0 Then
+                Dim potongan As Decimal = hargaAsli * (diskonPromosi / 100)
+                hargaNet = hargaAsli - potongan
+
+                'txtHarga.Text = hargaNet.ToString("N2", New System.Globalization.CultureInfo("id-ID")) 'INPUT data hargaNet di grid
+
+            Else
+                hargaNet = hargaAsli
+            End If
+
+            ' VALIDASI STOK TERLEBIH DAHULU (Paling Aman)
+            If jumlahBaruYangDiminta > stokBarang Then
+                MsgBox("Transaksi ditolak, stok di gudang tersisa " & stokBarang & " pcs, sedangkan Anda meminta " & jumlahBaruYangDiminta & " pcs", MsgBoxStyle.Exclamation, "Stok tidak cukup")
+                Exit Sub
+            End If
+
+            ' 7. UPDATE DATA GRID (Hanya mengupdate baris yang diklik, tidak perlu pakai Loop For)
+            Dim subtotalBaru As Decimal = hargaNet * jumlahBaruYangDiminta
+
+            barisKlikKeranjang.Cells("colJumlah").Value = jumlahBaruYangDiminta
+            barisKlikKeranjang.Cells("colSubTotal").Value = subtotalBaru
+
+            ' 8. Hitung ulang total belanjaan seluruhnya
+            HitungGrandTotal()
+
+            MsgBox("Jumlah barang berhasil diubah menjadi " & jumlahBaruYangDiminta & " pcs", MsgBoxStyle.Information)
+
+
+        Catch ex As Exception
+            MsgBox("Terjadi kesalahan update Jumlah" * ex.Message, MsgBoxStyle.Critical, MessageBoxButtons.OK)
+
+        End Try
+
 
     End Sub
 

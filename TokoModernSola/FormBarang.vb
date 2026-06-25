@@ -15,7 +15,7 @@ Public Class FormBarang
             'ds sebagai memori virtual di Ram komputer yang menampung tabel bayangan
             ds = New DataSet()
 
-            'da.fill akan mengirimkan data yang diterik ke ds (memori tabel bayangan sementara)
+            'da.fill akan mengirimkan data yang ditarik ke ds (memori tabel bayangan sementara)
             da.Fill(ds, "barang")
 
             DgvBarang.DataSource = ds.Tables("barang") 'datagridview di ui ditarik untuk menampilkan data

@@ -65,3 +65,4 @@ D:\Project\Dummy\TokoModern\TokoModernSola\obj\Debug\TokoModernSola.vbproj.CopyC
 D:\Project\Dummy\TokoModern\TokoModernSola\obj\Debug\TokoModernSola.exe
 D:\Project\Dummy\TokoModern\TokoModernSola\obj\Debug\TokoModernSola.xml
 D:\Project\Dummy\TokoModern\TokoModernSola\obj\Debug\TokoModernSola.pdb
+D:\Project\Dummy\TokoModern\TokoModernSola\obj\Debug\TokoModernSola.FormLaporan.resources

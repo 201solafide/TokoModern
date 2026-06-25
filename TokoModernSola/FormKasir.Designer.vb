@@ -41,8 +41,8 @@ Partial Class FormKasir
         Me.lblKembali = New System.Windows.Forms.Label()
         Me.btnSimpanTransaksi = New System.Windows.Forms.Button()
         Me.btnEditKeranjang = New System.Windows.Forms.Button()
-        Me.btnHapusKeranjang = New System.Windows.Forms.Button()
         Me.ImgTrashEdit = New System.Windows.Forms.ImageList(Me.components)
+        Me.btnHapusKeranjang = New System.Windows.Forms.Button()
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
@@ -120,6 +120,7 @@ Partial Class FormKasir
         Me.dgvKeranjang.Name = "dgvKeranjang"
         Me.dgvKeranjang.RowHeadersWidth = 62
         Me.dgvKeranjang.RowTemplate.Height = 28
+        Me.dgvKeranjang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvKeranjang.Size = New System.Drawing.Size(789, 770)
         Me.dgvKeranjang.TabIndex = 6
         '
@@ -211,6 +212,13 @@ Partial Class FormKasir
         Me.btnEditKeranjang.TabIndex = 11
         Me.btnEditKeranjang.UseVisualStyleBackColor = True
         '
+        'ImgTrashEdit
+        '
+        Me.ImgTrashEdit.ImageStream = CType(resources.GetObject("ImgTrashEdit.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.ImgTrashEdit.TransparentColor = System.Drawing.Color.Transparent
+        Me.ImgTrashEdit.Images.SetKeyName(0, "trash.png")
+        Me.ImgTrashEdit.Images.SetKeyName(1, "edit.png")
+        '
         'btnHapusKeranjang
         '
         Me.btnHapusKeranjang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -222,13 +230,6 @@ Partial Class FormKasir
         Me.btnHapusKeranjang.TabIndex = 12
         Me.btnHapusKeranjang.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnHapusKeranjang.UseVisualStyleBackColor = True
-        '
-        'ImgTrashEdit
-        '
-        Me.ImgTrashEdit.ImageStream = CType(resources.GetObject("ImgTrashEdit.ImageStream"), System.Windows.Forms.ImageListStreamer)
-        Me.ImgTrashEdit.TransparentColor = System.Drawing.Color.Transparent
-        Me.ImgTrashEdit.Images.SetKeyName(0, "trash.png")
-        Me.ImgTrashEdit.Images.SetKeyName(1, "edit.png")
         '
         'FormKasir
         '

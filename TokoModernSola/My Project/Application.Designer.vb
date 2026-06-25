@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.TokoModernSola.FormKasir
+            Me.MainForm = Global.TokoModernSola.FormLaporan
         End Sub
     End Class
 End Namespace
