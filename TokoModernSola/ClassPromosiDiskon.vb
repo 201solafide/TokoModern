@@ -16,4 +16,14 @@
 
         Next
     End Function
+
+    'Dim hargaAsli As Decimal = Convert.ToDecimal(txtHarga.Text)
+    'Dim jumlahBaru As Integer = Convert.ToInt32(txtJumlah.Text)
+
+    Public Shared Function HargaDiskon(hargaAsli As Decimal, diskonPromosi As Decimal)
+        Dim potonganHarga = hargaAsli * (diskonPromosi / 100)
+        Dim hargaNet As Decimal = hargaAsli - potonganHarga
+
+        Return hargaNet
+    End Function
 End Class

@@ -20,6 +20,20 @@ Public Class FormBarang
 
             DgvBarang.DataSource = ds.Tables("barang") 'datagridview di ui ditarik untuk menampilkan data
 
+            DgvBarang.Columns("Kode Barang").Width = 120
+            DgvBarang.Columns("Kode Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            DgvBarang.Columns("Kode Barang").Frozen = True
+            DgvBarang.Columns("Nama Barang").Width = 120
+            DgvBarang.Columns("Nama Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            DgvBarang.Columns("Nama Barang").Frozen = False
+            DgvBarang.Columns("Stok Barang").Width = 120
+            DgvBarang.Columns("Stok Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+            DgvBarang.Columns("Stok Barang").Frozen = False
+            DgvBarang.Columns("Harga Barang").Width = 120
+            DgvBarang.Columns("Harga Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            DgvBarang.Columns("Harga Barang").Frozen = False
+
+
         Catch ex As Exception
             MsgBox("Gagal memuat data kedalam tabel" & ex.Message, MsgBoxStyle.Critical)
 
@@ -117,10 +131,9 @@ Public Class FormBarang
             ' 5. UBAH KE TIPE DESIMAL UNTUK KEPERLUAN HITUNG DISKON (Aman karena sudah pasti angka murni)
             Dim hargaAsli As Decimal = 0
             Decimal.TryParse(teksHarga, hargaAsli)
-
-            ' 6. LOGIC CONDITION JIKA ADA PROMO DI KODE BARANG
             Dim diskonPersen As Decimal = ClassPromosiDiskon.CekStatusPromosi(TxtKode.Text)
 
+            ' 6. LOGIC CONDITION JIKA ADA PROMO DI KODE BARANG
             If diskonPersen > 0 Then
                 ' KONDISI JIKA ADA PROMOSI
                 txtPromosi.Visible = True
@@ -130,8 +143,7 @@ Public Class FormBarang
                 txtPromosi.Text = diskonPersen.ToString() & "%"
 
                 ' HITUNG HARGA NET
-                Dim potongan As Decimal = hargaAsli * (diskonPersen / 100)
-                Dim hargaNet As Decimal = hargaAsli - potongan
+                Dim hargaNet As Decimal = ClassPromosiDiskon.HargaDiskon(hargaAsli, diskonPersen)
 
                 txtHargaNet.Enabled = False
                 txtHargaNet.Text = Math.Truncate(hargaNet).ToString() ' Tampilkan angka murni tanpa desimal

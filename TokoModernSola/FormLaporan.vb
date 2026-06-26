@@ -13,7 +13,7 @@ Public Class FormLaporan
             OpenKoneksi() 'koneksi ke database
 
             'mengambil riwayat nota, urut dari yang paling baru dibuat
-            Dim queryNota As String = "SELECT no_nota AS ""No Nota"", tanggal_transaksi AS ""Tanggal"", total_bayar AS ""Total Belanja"" FROM penjualan ORDER BY tanggal_transaksi DESC"
+            Dim queryNota As String = "SELECT no_nota AS ""No Nota"", tanggal_transaksi AS ""Tanggal Transaksi"", total_bayar AS ""Total Belanja"" FROM penjualan ORDER BY tanggal_transaksi DESC"
 
             da = New NpgsqlDataAdapter(queryNota, koneksi) 'Menarik data melalui queryNota diatas
             ds = New DataSet() 'Membuat inisiasi dataset virtual
@@ -21,6 +21,15 @@ Public Class FormLaporan
 
             dgvMaster.DataSource = ds.Tables("master_nota") 'Datagridview akan menarik data dari master_nota ditampilkan di ui
 
+            dgvMaster.Columns("No Nota").Width = 120
+            dgvMaster.Columns("No Nota").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            dgvMaster.Columns("No Nota").Frozen = False
+            dgvMaster.Columns("Tanggal Transaksi").Width = 120
+            dgvMaster.Columns("Tanggal Transaksi").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            dgvMaster.Columns("Tanggal Transaksi").Frozen = False
+            dgvMaster.Columns("Total Belanja").Width = 120
+            dgvMaster.Columns("Total Belanja").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+            dgvMaster.Columns("Total Belanja").Frozen = False
 
         Catch ex As Exception
             MsgBox("Gagal menarik dan memuat nota master : " & ex.Message, MsgBoxStyle.Critical)
@@ -64,7 +73,7 @@ Public Class FormLaporan
                                             "b.harga_jual AS ""Harga Jual"", " & ' <-- LOGIKA: Diubah dari b.harga_jual ke dp.harga_jual
                                             "dp.jumlah_beli AS ""Jumlah Beli"", " &
                                             "p.total_bayar AS ""Total Bayar"", " &
-                                            "dp.subtotal AS ""SubTotal"", " &
+                                            "dp.subtotal AS ""Sub Total"", " &
                                             "p.tanggal_transaksi AS ""Tanggal Transaksi"" " &
                                             "FROM penjualan p " &
                                             "INNER JOIN detail_penjualan dp ON p.no_nota = dp.no_nota " &
@@ -81,6 +90,33 @@ Public Class FormLaporan
 
                 dgvDetail.DataSource = dsDetail.Tables("detail_nota")
 
+                dgvDetail.Columns("Nota").Width = 80
+                dgvDetail.Columns("Nota").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                dgvDetail.Columns("Nota").Frozen = False
+                dgvDetail.Columns("Kode Barang").Width = 120
+                dgvDetail.Columns("Kode Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                dgvDetail.Columns("Kode Barang").Frozen = False
+                dgvDetail.Columns("Harga Jual").Width = 120
+                dgvDetail.Columns("Harga Jual").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                dgvDetail.Columns("Harga Jual").Frozen = False
+                dgvDetail.Columns("Jumlah Beli").Width = 120
+                dgvDetail.Columns("Jumlah Beli").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                dgvDetail.Columns("Jumlah Beli").Frozen = False
+                dgvDetail.Columns("Total Bayar").Width = 120
+                dgvDetail.Columns("Total Bayar").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                dgvDetail.Columns("Total Bayar").Frozen = False
+                dgvDetail.Columns("Sub Total").Width = 120
+                dgvDetail.Columns("Sub Total").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                dgvDetail.Columns("Sub Total").Frozen = False
+                dgvDetail.Columns("Tanggal Transaksi").Width = 120
+                dgvDetail.Columns("Tanggal Transaksi").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
+                dgvDetail.Columns("Tanggal Transaksi").Frozen = False
+                'dgvDetail.Columns("Sub Total").Width = 120
+                'dgvDetail.Columns("Sub Total").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                'dgvDetail.Columns("Sub Total").Frozen = False
+                'dgvDetail.Columns("Sub Total").Width = 120
+                'dgvDetail.Columns("Sub Total").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                'dgvDetail.Columns("Sub Total").Frozen = False
 
             Catch ex As Exception
                 MsgBox("Gagal memuat data detail nota: " & ex.Message, MsgBoxStyle.Exclamation)

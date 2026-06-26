@@ -115,8 +115,9 @@ Public Class FormKasir
 
     'KONDISI JIKA TOMBOL TAMBAH di klik
     Private Sub btnTambah_Click(sender As Object, e As EventArgs) Handles btnTambah.Click
-        If txtNamaBarang.Text = "" Then
+        If txtNamaBarang.Text = "" Or txtJumlah.Text = "" Then
             MsgBox("Cari barangnya dulu:")
+
             Exit Sub
         End If
         'OR LIKE
@@ -124,17 +125,22 @@ Public Class FormKasir
 
         'HITUNG subtotal untuk barang (harga x jumlah)
         Dim hargaAsli As Decimal = Convert.ToDecimal(txtHarga.Text)
-        Dim jumlahBaru As Integer = Convert.ToInt32(txtJumlah.Text)
+        Dim jumlahBaru As Integer = Convert.ToInt32(txtJumlah.Text.Trim())
+        'Dim cariKode As String = Convert.ToString(txtCariKode.Text)
+        ' .Replace(vbCrLf, "") akan menghapus karakter Enter jika ada
+        ' .Trim() akan menghapus spasi kosong di awal dan di akhir teks
+        Dim cariKode As String = txtCariKode.Text.Replace(vbCr, "").Replace(vbLf, "").Trim()
+
         Dim jumlahLama As Integer = 0
         Dim hargaNet As Decimal
         Dim subtotal As Decimal
 
         'LOGIC JIKA PROMOSI BARANG
-        Dim diskonPromosi As Decimal = ClassPromosiDiskon.CekStatusPromosi(txtCariKode.Text)
+        Dim diskonPromosi As Decimal = ClassPromosiDiskon.CekStatusPromosi(cariKode)
 
         If diskonPromosi > 0 Then
-            Dim potongan As Decimal = hargaAsli * (diskonPromosi / 100)
-            hargaNet = hargaAsli - potongan
+            'Dim potongan As Decimal = hargaAsli * (diskonPromosi / 100)
+            hargaNet = ClassPromosiDiskon.HargaDiskon(hargaAsli, diskonPromosi)
 
             'txtHarga.Text = hargaNet.ToString("N2", New System.Globalization.CultureInfo("id-ID")) 'INPUT data hargaNet di grid
 
@@ -340,9 +346,14 @@ Public Class FormKasir
 
         Dim hasilInput As String = InputBox("Edit jumlah: ", "Edit Jumlah")
 
+        'MENANGANI KONDISI JIKA USER KLIK 'Cancel' atau tombol 'X'
+        If hasilInput = "" Then
+            Exit Sub 'LANGSUNG MENUTUP WINDOW INPUT TANPA 
+        End If
+
         Dim totalYangDiminta As Integer = 0
         Dim jumlahBaru As Integer = Convert.ToInt32(txtJumlah.Text)
-        Dim jumlahBaruYangDiminta As Integer = Convert.ToInt32(hasilInput)
+        Dim jumlahBaruYangDiminta As Integer = Convert.ToInt32(hasilInput.Trim()) 'Menambahkan Trim() untuk mengatur logic hapus spasi
         Dim hargaNet As Decimal = 0
 
         MsgBox("Hasil yang print = " & jumlahBaruYangDiminta)

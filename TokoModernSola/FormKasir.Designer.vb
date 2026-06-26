@@ -31,11 +31,6 @@ Partial Class FormKasir
         Me.txtJumlah = New System.Windows.Forms.TextBox()
         Me.btnTambah = New System.Windows.Forms.Button()
         Me.dgvKeranjang = New System.Windows.Forms.DataGridView()
-        Me.colKode = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colNama = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colHarga = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colJumlah = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.colSubTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.txtBayar = New System.Windows.Forms.TextBox()
         Me.lblGrandTotal = New System.Windows.Forms.Label()
         Me.lblKembali = New System.Windows.Forms.Label()
@@ -47,6 +42,11 @@ Partial Class FormKasir
         Me.btnNavBarang = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnNavPos = New System.Windows.Forms.ToolStripMenuItem()
         Me.btnNavLaporan = New System.Windows.Forms.ToolStripMenuItem()
+        Me.colKode = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colNama = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colHarga = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colJumlah = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.colSubTotal = New System.Windows.Forms.DataGridViewTextBoxColumn()
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
@@ -128,42 +128,6 @@ Partial Class FormKasir
         Me.dgvKeranjang.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dgvKeranjang.Size = New System.Drawing.Size(789, 770)
         Me.dgvKeranjang.TabIndex = 6
-        '
-        'colKode
-        '
-        Me.colKode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
-        Me.colKode.HeaderText = "Kode Barang"
-        Me.colKode.MinimumWidth = 6
-        Me.colKode.Name = "colKode"
-        Me.colKode.Width = 120
-        '
-        'colNama
-        '
-        Me.colNama.HeaderText = "Nama Barang"
-        Me.colNama.MinimumWidth = 6
-        Me.colNama.Name = "colNama"
-        Me.colNama.Width = 125
-        '
-        'colHarga
-        '
-        Me.colHarga.HeaderText = "Harga Barang"
-        Me.colHarga.MinimumWidth = 6
-        Me.colHarga.Name = "colHarga"
-        Me.colHarga.Width = 125
-        '
-        'colJumlah
-        '
-        Me.colJumlah.HeaderText = "Jumlah"
-        Me.colJumlah.MinimumWidth = 6
-        Me.colJumlah.Name = "colJumlah"
-        Me.colJumlah.Width = 125
-        '
-        'colSubTotal
-        '
-        Me.colSubTotal.HeaderText = "SubTotal"
-        Me.colSubTotal.MinimumWidth = 6
-        Me.colSubTotal.Name = "colSubTotal"
-        Me.colSubTotal.Width = 125
         '
         'txtBayar
         '
@@ -264,6 +228,45 @@ Partial Class FormKasir
         Me.btnNavLaporan.Size = New System.Drawing.Size(77, 24)
         Me.btnNavLaporan.Text = "Laporan"
         '
+        'colKode
+        '
+        Me.colKode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells
+        Me.colKode.Frozen = True
+        Me.colKode.HeaderText = "Kode Barang"
+        Me.colKode.MinimumWidth = 30
+        Me.colKode.Name = "colKode"
+        Me.colKode.Width = 120
+        '
+        'colNama
+        '
+        Me.colNama.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.colNama.HeaderText = "Nama Barang"
+        Me.colNama.MinimumWidth = 30
+        Me.colNama.Name = "colNama"
+        '
+        'colHarga
+        '
+        Me.colHarga.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colHarga.HeaderText = "Harga Barang"
+        Me.colHarga.MinimumWidth = 30
+        Me.colHarga.Name = "colHarga"
+        Me.colHarga.Width = 126
+        '
+        'colJumlah
+        '
+        Me.colJumlah.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.colJumlah.HeaderText = "Jumlah"
+        Me.colJumlah.MinimumWidth = 30
+        Me.colJumlah.Name = "colJumlah"
+        Me.colJumlah.Width = 82
+        '
+        'colSubTotal
+        '
+        Me.colSubTotal.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill
+        Me.colSubTotal.HeaderText = "SubTotal"
+        Me.colSubTotal.MinimumWidth = 30
+        Me.colSubTotal.Name = "colSubTotal"
+        '
         'FormKasir
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -307,11 +310,6 @@ Partial Class FormKasir
     Friend WithEvents lblGrandTotal As Label
     Friend WithEvents lblKembali As Label
     Friend WithEvents btnSimpanTransaksi As Button
-    Friend WithEvents colKode As DataGridViewTextBoxColumn
-    Friend WithEvents colNama As DataGridViewTextBoxColumn
-    Friend WithEvents colHarga As DataGridViewTextBoxColumn
-    Friend WithEvents colJumlah As DataGridViewTextBoxColumn
-    Friend WithEvents colSubTotal As DataGridViewTextBoxColumn
     Friend WithEvents btnEditKeranjang As Button
     Friend WithEvents ImgTrashEdit As ImageList
     Friend WithEvents btnHapusKeranjang As Button
@@ -319,4 +317,9 @@ Partial Class FormKasir
     Friend WithEvents btnNavBarang As ToolStripMenuItem
     Friend WithEvents btnNavPos As ToolStripMenuItem
     Friend WithEvents btnNavLaporan As ToolStripMenuItem
+    Friend WithEvents colKode As DataGridViewTextBoxColumn
+    Friend WithEvents colNama As DataGridViewTextBoxColumn
+    Friend WithEvents colHarga As DataGridViewTextBoxColumn
+    Friend WithEvents colJumlah As DataGridViewTextBoxColumn
+    Friend WithEvents colSubTotal As DataGridViewTextBoxColumn
 End Class
