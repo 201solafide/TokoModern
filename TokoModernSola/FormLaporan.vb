@@ -41,9 +41,6 @@ Public Class FormLaporan
 
     End Sub
 
-    Private Sub btnCetakText_Click(sender As Object, e As EventArgs) Handles btnCetakText.Click
-
-    End Sub
 
     '==================
     'FORMAT LAPORAN PERTAMA KALI DIBUKA
@@ -70,6 +67,7 @@ Public Class FormLaporan
 
                 Dim queryDetail As String = "SELECT dp.no_nota AS ""Nota"", " &
                                             "dp.kode_barang AS ""Kode Barang"", " &
+                                            "b.nama_barang AS ""Nama Barang"", " &
                                             "b.harga_jual AS ""Harga Jual"", " & ' <-- LOGIKA: Diubah dari b.harga_jual ke dp.harga_jual
                                             "dp.jumlah_beli AS ""Jumlah Beli"", " &
                                             "p.total_bayar AS ""Total Bayar"", " &
@@ -96,6 +94,9 @@ Public Class FormLaporan
                 dgvDetail.Columns("Kode Barang").Width = 120
                 dgvDetail.Columns("Kode Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 dgvDetail.Columns("Kode Barang").Frozen = False
+                dgvDetail.Columns("Nama Barang").Width = 120
+                dgvDetail.Columns("Nama Barang").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
+                dgvDetail.Columns("Nama Barang").Frozen = False
                 dgvDetail.Columns("Harga Jual").Width = 120
                 dgvDetail.Columns("Harga Jual").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
                 dgvDetail.Columns("Harga Jual").Frozen = False
@@ -111,12 +112,6 @@ Public Class FormLaporan
                 dgvDetail.Columns("Tanggal Transaksi").Width = 120
                 dgvDetail.Columns("Tanggal Transaksi").AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill
                 dgvDetail.Columns("Tanggal Transaksi").Frozen = False
-                'dgvDetail.Columns("Sub Total").Width = 120
-                'dgvDetail.Columns("Sub Total").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                'dgvDetail.Columns("Sub Total").Frozen = False
-                'dgvDetail.Columns("Sub Total").Width = 120
-                'dgvDetail.Columns("Sub Total").AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells
-                'dgvDetail.Columns("Sub Total").Frozen = False
 
             Catch ex As Exception
                 MsgBox("Gagal memuat data detail nota: " & ex.Message, MsgBoxStyle.Exclamation)
@@ -126,6 +121,88 @@ Public Class FormLaporan
             End Try
         End If
     End Sub
+
+    Private Sub btnCetakText_Click(sender As Object, e As EventArgs) Handles btnCetakText.Click
+        'PASTIKAN TERLEBIH DAHULU KASIR SUDAH MEMILIH NOTA MANA YANG MAU DICETAK
+        If dgvMaster.CurrentRow Is Nothing Then
+            MsgBox("Silahkan pilih nota yang ingin dicetak ", MsgBoxStyle.Information, "Cetak Nota")
+            Exit Sub
+        End If
+
+        'AMBIL DATA DARI BARIS GRID YANG SEDANG DIKLIK
+        Dim noNota_MasterGrid As String = dgvMaster.CurrentRow.Cells("No Nota").Value.ToString
+        Dim tglTransaksi_MasterGrid As String = dgvMaster.CurrentRow.Cells("Tanggal Transaksi").Value.ToString
+        Dim toBayar_MasterGrid_String As String = dgvMaster.CurrentRow.Cells("Total Belanja").Value 'INI MASIH BENTUK STRING
+        Dim toBayar_MasterGrid As Decimal = CDec(toBayar_MasterGrid_String)
+        'CDec = Convert.toDecimal
+
+        '===========================
+        'Tenukan tempat menyimpan file struk folder : 
+        'Dim pathDokumenNota As String = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+        Dim pathFolderNota As String = "D:\Project\Dummy\TokoModern\DummyNotaTXT"
+        Dim namaFileNota As String = "Nota " & noNota_MasterGrid & ".txt"
+
+        If Not Directory.Exists(pathFolderNota) Then
+            Directory.CreateDirectory(pathFolderNota) 'KONDISI JIKA PATH BELUM TERSEDIA
+        End If
+
+        Dim PathFileNota As String = Path.Combine(pathFolderNota, namaFileNota)
+
+
+        'KONEKSI
+        Try
+            Using writer As New StreamWriter(PathFileNota, False)
+                ' Mulai menggambar struktur nota kasir modern
+                writer.WriteLine("========================================")
+                writer.WriteLine("          TOKO MODERN SOLA v1.0         ")
+                writer.WriteLine("     Jl. Raya Utama No. 123, Jakarta    ")
+                writer.WriteLine("========================================")
+                writer.WriteLine(" No Nota : " & noNota_MasterGrid)
+                writer.WriteLine(" Tanggal : " & tglTransaksi_MasterGrid)
+                writer.WriteLine(" Kasir   : Administrator")
+                writer.WriteLine("========================================")
+                writer.WriteLine(String.Format("{0,-15} {1,-5} {2,-8} {3,-10}", "Barang", "Qty", "Harga", "Subtotal"))
+                writer.WriteLine("----------------------------------------")
+
+                'UNTUK MENARIK DATA DARI TABLE, perlu perulangan untuk memuat setiap baris nya
+                For i As Integer = 0 To dgvDetail.Rows.Count - 1 'PERULANGAN DARI INDEKS KE 0 SAMPAI BARIS TERAKHIR TABLE GRID dgvDetail - 1 {0-9}
+                    Dim NamaBarang As String = dgvDetail.Rows(i).Cells("Nama Barang").Value.ToString()
+                    Dim KodeBarang As String = dgvDetail.Rows(i).Cells("Kode Barang").Value.ToString()
+                    Dim Qty As String = dgvDetail.Rows(i).Cells("Jumlah Beli").Value.ToString()
+                    Dim Harga As Decimal = Convert.ToDecimal(dgvDetail.Rows(i).Cells("Harga Jual").Value)
+                    Dim Subtotal As Decimal = Convert.ToDecimal(dgvDetail.Rows(i).Cells("Sub Total").Value)
+
+                    'KONDISI JIKA NAMA BARANG (CHARACTER) TERLALU PANJANG
+                    If NamaBarang.Length > 14 Then NamaBarang = NamaBarang.Substring(0, 14)
+
+                    ' Menggunakan String.Format untuk mengatur jarak kolom teks (Kiri/Kanan alignment) agar lurus vertikal
+                    writer.WriteLine(String.Format("{0,-15} {1,-5} {2,-8} {3,-10}", NamaBarang, Qty, Harga.ToString("N0"), Subtotal.ToString("N0")))
+                    'Kode misterius ini:  {0,-15} {1,-5}. Ini adalah teknik Teks Padding di .NET yang sangat penting
+
+                    'Angka {0, -15} artinya: Ambil Data variabel pertama (namaBarang), lalu sediakan ruang sebanyak 15 karakter rata kiri (tanda minus -). Jika teksnya pendek, sisa ruangnya otomatis diisi spasi.
+
+                    'Teknik ini menjamin kolom nama barang, Qty, Harga, dan subtotal di struk cetak Anda nanti lurus berbaris rapi ke bawah layaknya struk Indomaret/Alfamart, tidak berantakan maju mundur karena panjang huruf yang berbeda-beda.
+                Next
+
+                writer.WriteLine("----------------------------------------")
+                writer.WriteLine(" Total Belanja : Rp. " & toBayar_MasterGrid.ToString("N0"))
+                writer.WriteLine("========================================")
+                writer.WriteLine("       TERIMA KASIH ATAS KUNJUNGAN      ")
+                writer.WriteLine("               ANDA ATAS                ")
+                writer.WriteLine("========================================")
+
+            End Using
+
+            'KONFIRMASI STRUK TELAH TERSIMPAN  SECARA OTOMATIS
+            MsgBox("Struk telah tercetak di path = " & PathFileNota, MsgBoxStyle.Information, "Cetak Sukses")
+
+            Process.Start("notepad.txt", PathFileNota) 'MEMAKSA WINDOWS MEMBUKA FILE NOTA .TXT
+        Catch ex As Exception
+            MsgBox("Gagal melakukan simulasi cetak nota " & ex.Message, MsgBoxStyle.Critical)
+
+        End Try
+    End Sub
+
 
     Public Sub RefreshDetailLaporan()
         ' KODE DATABASE ANDA DI SINI
