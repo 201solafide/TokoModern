@@ -93,37 +93,50 @@ Public Class FormBarang
     Private Sub dgvBarang_CellClick(sender As Object, e As DataGridViewCellEventArgs) Handles DgvBarang.CellClick
         ' Validasi baris yang diklik bukan header
         If e.RowIndex >= 0 Then
-            Dim baris As DataGridViewRow = DgvBarang.Rows(e.RowIndex) 'Kode ini untuk membuat objek baris yang diklik oleh user
+            Dim baris As DataGridViewRow = DgvBarang.Rows(e.RowIndex) ' Membuat objek baris yang diklik
 
-            'Menarik data dari setiap kolom di baris yang diklik untuk disimpan di setiap txt input 
+            ' 1. TARIK DATA UTAMA KE TEXTBOX (Kode & Nama)
             TxtKode.Text = baris.Cells("Kode Barang").Value.ToString()
             TxtBarang.Text = baris.Cells("Nama Barang").Value.ToString()
-            TxtStok.Text = baris.Cells("Stok Barang").Value.ToString()
-            TxtHarga.Text = baris.Cells("Harga Barang").Value.ToString()
 
-            Dim hargaAsli As Decimal = Convert.ToDecimal(baris.Cells("Harga Barang").Value)
-            TxtHarga.Text = hargaAsli.ToString("N2", New System.Globalization.CultureInfo("id-ID"))
+            ' 2. AMBIL NILAI MURNI DARI GRID SEBAGAI STRING (Antisipasi format desimal .00 atau ,00 dari database)
+            Dim teksStok As String = baris.Cells("Stok Barang").Value.ToString().Trim()
+            Dim teksHarga As String = baris.Cells("Harga Barang").Value.ToString().Trim()
 
+            ' 3. LOGIKA POTONG DESIMAL (.00 ATAU ,00) LANGSUNG DARI DATA GRID
+            If teksStok.Contains(".") Then teksStok = teksStok.Split("."c)(0)
+            If teksHarga.Contains(".") Then teksHarga = teksHarga.Split("."c)(0)
 
-            'TAMBAHKAN LOGIC CONDITION jika ada promo di kode barang
+            If teksStok.Contains(",") Then teksStok = teksStok.Split("."c)(0)
+            If teksHarga.Contains(",") Then teksHarga = teksHarga.Split(","c)(0)
+
+            ' 4. MASUKKAN HASIL BERSIH ANGKA MURNI KE TEXTBOX INPUT
+            TxtStok.Text = teksStok
+            TxtHarga.Text = teksHarga
+
+            ' 5. UBAH KE TIPE DESIMAL UNTUK KEPERLUAN HITUNG DISKON (Aman karena sudah pasti angka murni)
+            Dim hargaAsli As Decimal = 0
+            Decimal.TryParse(teksHarga, hargaAsli)
+
+            ' 6. LOGIC CONDITION JIKA ADA PROMO DI KODE BARANG
             Dim diskonPersen As Decimal = ClassPromosiDiskon.CekStatusPromosi(TxtKode.Text)
-            If diskonPersen > 0 Then
-                'KONDISI JIKA ADA PROMOSI
-                txtPromosi.Visible = True ' Menampilkan text promosi
-                txtHargaNet.Visible = True 'Menampilkan text harga net
 
-                'isi datanya bersiat enable | TIDAK DAPAT DIUBAH
+            If diskonPersen > 0 Then
+                ' KONDISI JIKA ADA PROMOSI
+                txtPromosi.Visible = True
+                txtHargaNet.Visible = True
+
                 txtPromosi.Enabled = False
                 txtPromosi.Text = diskonPersen.ToString() & "%"
 
-                'HITUNG HARGA NET
+                ' HITUNG HARGA NET
                 Dim potongan As Decimal = hargaAsli * (diskonPersen / 100)
                 Dim hargaNet As Decimal = hargaAsli - potongan
 
                 txtHargaNet.Enabled = False
-                txtHargaNet.Text = hargaNet.ToString("N2", New System.Globalization.CultureInfo("id-ID"))
-
+                txtHargaNet.Text = Math.Truncate(hargaNet).ToString() ' Tampilkan angka murni tanpa desimal
             Else
+                ' KONDISI JIKA TIDAK ADA PROMOSI
                 txtPromosi.Enabled = False
                 txtHargaNet.Enabled = False
 
@@ -131,11 +144,12 @@ Public Class FormBarang
                 txtHargaNet.Text = ""
             End If
 
-            'KUNCI KODE BARANG ITU PRIMARY KEY (TIDAK DAPAT DIUBAH)
+            ' KUNCI KODE BARANG KARENA PRIMARY KEY (TIDAK DAPAT DIUBAH SAAT EDIT)
             TxtKode.Enabled = False
 
         End If
     End Sub
+
 
     Private Sub btnUbah_Click(sender As Object, e As EventArgs) Handles BtnUbah.Click
         'VALIDASI TERLEBIH DAHULU, USER SUDAH MEMILIH BARIS YANG AKAN DI EDIT
@@ -143,6 +157,25 @@ Public Class FormBarang
             MsgBox("Pilih terlebih dahulu data barang yang ingin diubah melalui tabel!!")
 
         Else 'KONDISIKA JIKA txtKode TIDAK dalam keadaan kosong
+
+            ' BERSIHKAN FORMAT DATA YANG DITARIK DATA GRID
+            Dim bersihStok As Integer = TxtStok.Text.Replace(".", "").Trim()
+            Dim bersihHarga As Integer = TxtHarga.Text.Replace(".", "").Trim()
+
+            Dim nilaiStok As Integer
+            Dim nilaiHarga As Decimal
+            ' Jika konversi gagal, program tidak akan crash, melainkan memunculkan pesan peringatan
+            If Not Integer.TryParse(bersihStok, nilaiStok) Then
+                MsgBox("Format angka pada kolom STOK salah!", MsgBoxStyle.Critical)
+                Exit Sub
+            End If
+
+            If Not Decimal.TryParse(bersihHarga, nilaiHarga) Then
+                MsgBox("Format angka pada kolom HARGA salah!", MsgBoxStyle.Critical)
+                Exit Sub
+            End If
+
+
             Try
                 OpenKoneksi() 'buka koneksi ke db terlebih dahulu
 
@@ -154,10 +187,12 @@ Public Class FormBarang
 
                 cmd = New NpgsqlCommand(queryUpdate, koneksi)
 
-                cmd.Parameters.AddWithValue("@nama", TxtBarang.Text)
-                cmd.Parameters.AddWithValue("@stok", Convert.ToInt32(TxtStok.Text))
-                cmd.Parameters.AddWithValue("@harga", Convert.ToDecimal(TxtHarga.Text))
                 cmd.Parameters.AddWithValue("@kode", TxtKode.Text)
+                cmd.Parameters.AddWithValue("@nama", TxtBarang.Text)
+                cmd.Parameters.AddWithValue("@kode", nilaiStok)
+                'cmd.Parameters.AddWithValue("@stok", Convert.ToInt32(TxtStok.Text)) 'diganti dengan variabel yang menyimpan nilai konveri integer
+                cmd.Parameters.AddWithValue("@harga", nilaiHarga)
+                'cmd.Parameters.AddWithValue("@harga", Convert.ToDecimal(TxtHarga.Text)) 'diganti dengan variabel yagn menyimpan nilai konversi decimal 
 
                 cmd.ExecuteNonQuery() 'PERINTAH EKSEKUSI QUERY DI DATABASE
 
@@ -226,10 +261,46 @@ Public Class FormBarang
         End If
     End Sub
 
-    Private Sub btnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
-        BersihkanForm()
+    Public Sub RefreshStokBarang()
+        ' KODE DATABASE ANDA DI SINI
+        ' Contoh: Tarik data stok terbaru dari database, lalu masukkan ke DataGridView
+        ' DataGridView1.DataSource = AmbilDataStokTerbaru()
+        TampilkanData()
 
     End Sub
 
 
+    Private Sub btnNavBarang_Click(sender As Object, e As EventArgs) Handles btnNavBarang.Click
+
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNavPos_Click(sender As Object, e As EventArgs) Handles btnNavPos.Click
+        FormKasir.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNavLaporan_Click(sender As Object, e As EventArgs) Handles btnNavLaporan.Click
+        FormLaporan.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub FormBarang_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Application.Exit()
+    End Sub
+
+    Private Sub FormBarang_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        RefreshStokBarang()
+    End Sub
+
+    Private Sub BtnRefresh_Click(sender As Object, e As EventArgs) Handles BtnRefresh.Click
+        BersihkanForm()
+    End Sub
+
+    Private Sub TxtHarga_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TxtHarga.KeyPress
+        'HANYA MENGINZIKAN ANGKA (0-9) DAN BACKSCPACE(CHR(8))
+        If Not Char.IsDigit(e.KeyChar) AndAlso e.KeyChar <> ChrW(Keys.Back) Then
+            e.Handled = True 'TOLAK INPUTAN SELAIN ANGKA
+        End If
+    End Sub
 End Class

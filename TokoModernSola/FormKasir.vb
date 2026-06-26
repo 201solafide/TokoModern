@@ -301,6 +301,12 @@ Public Class FormKasir
             lblKembali.Text = "Rp.0"
             BuatNotaOtomatis()
             txtCariKode.Focus()
+            ' 2. UPDATE FORM LAIN SECARA REAL-TIME
+            ' Panggil fungsi refresh di FormBarang agar stoknya langsung terupdate di latar belakang
+            FormBarang.RefreshStokBarang()
+
+            ' Panggil fungsi refresh di FormLaporan agar data penjualan baru langsung masuk
+            FormLaporan.RefreshDetailLaporan()
 
         Catch ex As Exception
             ' PERBAIKAN: Melakukan Rollback hanya jika transaksi AKTIF (IsNot Nothing)
@@ -418,5 +424,24 @@ Public Class FormKasir
 
             MsgBox("Item berhasil dihapus dari keranjang.", MsgBoxStyle.Information)
         End If
+    End Sub
+
+
+    Private Sub btnNavBarang_Click(sender As Object, e As EventArgs) Handles btnNavBarang.Click
+        FormBarang.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNavPos_Click(sender As Object, e As EventArgs) Handles btnNavPos.Click
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNavLaporan_Click(sender As Object, e As EventArgs) Handles btnNavLaporan.Click
+        FormLaporan.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub FormKasir_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Application.Exit()
     End Sub
 End Class

@@ -30,15 +30,20 @@ Partial Class FormLaporan
         Me.Label2 = New System.Windows.Forms.Label()
         Me.btnCetakText = New System.Windows.Forms.Button()
         Me.imgPrint = New System.Windows.Forms.ImageList(Me.components)
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.btnNavBarang = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNavPos = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNavLaporan = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.dgvMaster, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.dgvDetail, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.AutoSize = True
         Me.Label1.Font = New System.Drawing.Font("MV Boli", 20.0!)
-        Me.Label1.Location = New System.Drawing.Point(97, 38)
+        Me.Label1.Location = New System.Drawing.Point(97, 70)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(405, 45)
         Me.Label1.TabIndex = 0
@@ -47,7 +52,7 @@ Partial Class FormLaporan
         'dgvMaster
         '
         Me.dgvMaster.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvMaster.Location = New System.Drawing.Point(105, 89)
+        Me.dgvMaster.Location = New System.Drawing.Point(105, 121)
         Me.dgvMaster.Name = "dgvMaster"
         Me.dgvMaster.ReadOnly = True
         Me.dgvMaster.RowHeadersWidth = 51
@@ -58,7 +63,7 @@ Partial Class FormLaporan
         'dgvDetail
         '
         Me.dgvDetail.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dgvDetail.Location = New System.Drawing.Point(105, 451)
+        Me.dgvDetail.Location = New System.Drawing.Point(105, 483)
         Me.dgvDetail.Name = "dgvDetail"
         Me.dgvDetail.ReadOnly = True
         Me.dgvDetail.RowHeadersWidth = 51
@@ -70,7 +75,7 @@ Partial Class FormLaporan
         '
         Me.Label2.AutoSize = True
         Me.Label2.Font = New System.Drawing.Font("MV Boli", 20.0!)
-        Me.Label2.Location = New System.Drawing.Point(97, 394)
+        Me.Label2.Location = New System.Drawing.Point(97, 426)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(426, 45)
         Me.Label2.TabIndex = 3
@@ -92,6 +97,34 @@ Partial Class FormLaporan
         Me.imgPrint.TransparentColor = System.Drawing.Color.Transparent
         Me.imgPrint.Images.SetKeyName(0, "printer.png")
         '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNavBarang, Me.btnNavPos, Me.btnNavLaporan})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(1460, 28)
+        Me.MenuStrip1.TabIndex = 5
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'btnNavBarang
+        '
+        Me.btnNavBarang.Name = "btnNavBarang"
+        Me.btnNavBarang.Size = New System.Drawing.Size(70, 24)
+        Me.btnNavBarang.Text = "Barang"
+        '
+        'btnNavPos
+        '
+        Me.btnNavPos.Name = "btnNavPos"
+        Me.btnNavPos.Size = New System.Drawing.Size(81, 24)
+        Me.btnNavPos.Text = "Pos Kasir"
+        '
+        'btnNavLaporan
+        '
+        Me.btnNavLaporan.Name = "btnNavLaporan"
+        Me.btnNavLaporan.Size = New System.Drawing.Size(77, 24)
+        Me.btnNavLaporan.Text = "Laporan"
+        '
         'FormLaporan
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -102,11 +135,15 @@ Partial Class FormLaporan
         Me.Controls.Add(Me.dgvDetail)
         Me.Controls.Add(Me.dgvMaster)
         Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.MenuStrip1)
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "FormLaporan"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Laporan & Riwayat Transaksi Penjualan"
         CType(Me.dgvMaster, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.dgvDetail, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -118,4 +155,8 @@ Partial Class FormLaporan
     Friend WithEvents Label2 As Label
     Friend WithEvents btnCetakText As Button
     Friend WithEvents imgPrint As ImageList
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents btnNavBarang As ToolStripMenuItem
+    Friend WithEvents btnNavPos As ToolStripMenuItem
+    Friend WithEvents btnNavLaporan As ToolStripMenuItem
 End Class

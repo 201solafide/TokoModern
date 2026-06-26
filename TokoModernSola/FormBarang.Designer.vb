@@ -40,106 +40,120 @@ Partial Class FormBarang
         Me.ImageList1 = New System.Windows.Forms.ImageList(Me.components)
         Me.txtPromosi = New System.Windows.Forms.TextBox()
         Me.txtHargaNet = New System.Windows.Forms.TextBox()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.btnNavBarang = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNavPos = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNavLaporan = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DgvBarang, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'KodeBarang
         '
         Me.KodeBarang.AutoSize = True
-        Me.KodeBarang.Location = New System.Drawing.Point(125, 52)
+        Me.KodeBarang.Location = New System.Drawing.Point(111, 42)
         Me.KodeBarang.Name = "KodeBarang"
-        Me.KodeBarang.Size = New System.Drawing.Size(102, 20)
+        Me.KodeBarang.Size = New System.Drawing.Size(91, 17)
         Me.KodeBarang.TabIndex = 0
         Me.KodeBarang.Text = "Kode Barang"
         '
         'NamaBarang
         '
         Me.NamaBarang.AutoSize = True
-        Me.NamaBarang.Location = New System.Drawing.Point(125, 105)
+        Me.NamaBarang.Location = New System.Drawing.Point(111, 84)
         Me.NamaBarang.Name = "NamaBarang"
-        Me.NamaBarang.Size = New System.Drawing.Size(107, 20)
+        Me.NamaBarang.Size = New System.Drawing.Size(95, 17)
         Me.NamaBarang.TabIndex = 1
         Me.NamaBarang.Text = "Nama Barang"
         '
         'StokAwal
         '
         Me.StokAwal.AutoSize = True
-        Me.StokAwal.Location = New System.Drawing.Point(125, 158)
+        Me.StokAwal.Location = New System.Drawing.Point(111, 126)
         Me.StokAwal.Name = "StokAwal"
-        Me.StokAwal.Size = New System.Drawing.Size(80, 20)
+        Me.StokAwal.Size = New System.Drawing.Size(69, 17)
         Me.StokAwal.TabIndex = 2
         Me.StokAwal.Text = "Stok Awal"
         '
         'HargaJual
         '
         Me.HargaJual.AutoSize = True
-        Me.HargaJual.Location = New System.Drawing.Point(125, 217)
+        Me.HargaJual.Location = New System.Drawing.Point(111, 174)
         Me.HargaJual.Name = "HargaJual"
-        Me.HargaJual.Size = New System.Drawing.Size(86, 20)
+        Me.HargaJual.Size = New System.Drawing.Size(77, 17)
         Me.HargaJual.TabIndex = 3
         Me.HargaJual.Text = "Harga Jual"
         '
         'BtnSimpan
         '
-        Me.BtnSimpan.Location = New System.Drawing.Point(115, 294)
+        Me.BtnSimpan.Location = New System.Drawing.Point(102, 235)
+        Me.BtnSimpan.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnSimpan.Name = "BtnSimpan"
-        Me.BtnSimpan.Size = New System.Drawing.Size(156, 40)
+        Me.BtnSimpan.Size = New System.Drawing.Size(139, 32)
         Me.BtnSimpan.TabIndex = 4
         Me.BtnSimpan.Text = "Simpan Data"
         Me.BtnSimpan.UseVisualStyleBackColor = True
         '
         'TxtKode
         '
-        Me.TxtKode.Location = New System.Drawing.Point(296, 52)
+        Me.TxtKode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TxtKode.Location = New System.Drawing.Point(263, 42)
+        Me.TxtKode.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TxtKode.Name = "TxtKode"
-        Me.TxtKode.Size = New System.Drawing.Size(257, 26)
+        Me.TxtKode.Size = New System.Drawing.Size(229, 22)
         Me.TxtKode.TabIndex = 5
         '
         'TxtBarang
         '
-        Me.TxtBarang.Location = New System.Drawing.Point(296, 102)
+        Me.TxtBarang.Location = New System.Drawing.Point(263, 82)
+        Me.TxtBarang.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TxtBarang.Name = "TxtBarang"
-        Me.TxtBarang.Size = New System.Drawing.Size(257, 26)
+        Me.TxtBarang.Size = New System.Drawing.Size(229, 22)
         Me.TxtBarang.TabIndex = 6
         '
         'TxtStok
         '
-        Me.TxtStok.Location = New System.Drawing.Point(296, 158)
+        Me.TxtStok.Location = New System.Drawing.Point(263, 126)
+        Me.TxtStok.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TxtStok.Name = "TxtStok"
-        Me.TxtStok.Size = New System.Drawing.Size(257, 26)
+        Me.TxtStok.Size = New System.Drawing.Size(229, 22)
         Me.TxtStok.TabIndex = 7
         '
         'TxtHarga
         '
-        Me.TxtHarga.Location = New System.Drawing.Point(296, 217)
+        Me.TxtHarga.Location = New System.Drawing.Point(263, 174)
+        Me.TxtHarga.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.TxtHarga.Name = "TxtHarga"
-        Me.TxtHarga.Size = New System.Drawing.Size(257, 26)
+        Me.TxtHarga.Size = New System.Drawing.Size(229, 22)
         Me.TxtHarga.TabIndex = 8
         '
         'DgvBarang
         '
         Me.DgvBarang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DgvBarang.Location = New System.Drawing.Point(115, 366)
+        Me.DgvBarang.Location = New System.Drawing.Point(102, 293)
+        Me.DgvBarang.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.DgvBarang.Name = "DgvBarang"
         Me.DgvBarang.RowHeadersWidth = 62
         Me.DgvBarang.RowTemplate.Height = 28
-        Me.DgvBarang.Size = New System.Drawing.Size(938, 270)
+        Me.DgvBarang.Size = New System.Drawing.Size(834, 216)
         Me.DgvBarang.TabIndex = 9
         '
         'BtnUbah
         '
-        Me.BtnUbah.Location = New System.Drawing.Point(309, 294)
+        Me.BtnUbah.Location = New System.Drawing.Point(275, 235)
+        Me.BtnUbah.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnUbah.Name = "BtnUbah"
-        Me.BtnUbah.Size = New System.Drawing.Size(185, 40)
+        Me.BtnUbah.Size = New System.Drawing.Size(164, 32)
         Me.BtnUbah.TabIndex = 10
         Me.BtnUbah.Text = " Ubah Data"
         Me.BtnUbah.UseVisualStyleBackColor = True
         '
         'BtnHapus
         '
-        Me.BtnHapus.Location = New System.Drawing.Point(533, 294)
+        Me.BtnHapus.Location = New System.Drawing.Point(474, 235)
+        Me.BtnHapus.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnHapus.Name = "BtnHapus"
-        Me.BtnHapus.Size = New System.Drawing.Size(190, 40)
+        Me.BtnHapus.Size = New System.Drawing.Size(169, 32)
         Me.BtnHapus.TabIndex = 11
         Me.BtnHapus.Text = "Hapus Data"
         Me.BtnHapus.UseVisualStyleBackColor = True
@@ -148,9 +162,10 @@ Partial Class FormBarang
         '
         Me.BtnRefresh.ImageIndex = 0
         Me.BtnRefresh.ImageList = Me.ImageList1
-        Me.BtnRefresh.Location = New System.Drawing.Point(742, 294)
+        Me.BtnRefresh.Location = New System.Drawing.Point(660, 235)
+        Me.BtnRefresh.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.BtnRefresh.Name = "BtnRefresh"
-        Me.BtnRefresh.Size = New System.Drawing.Size(44, 40)
+        Me.BtnRefresh.Size = New System.Drawing.Size(39, 32)
         Me.BtnRefresh.TabIndex = 12
         Me.BtnRefresh.UseVisualStyleBackColor = True
         '
@@ -162,23 +177,53 @@ Partial Class FormBarang
         '
         'txtPromosi
         '
-        Me.txtPromosi.Location = New System.Drawing.Point(296, 250)
+        Me.txtPromosi.Location = New System.Drawing.Point(263, 200)
+        Me.txtPromosi.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtPromosi.Name = "txtPromosi"
-        Me.txtPromosi.Size = New System.Drawing.Size(94, 26)
+        Me.txtPromosi.Size = New System.Drawing.Size(84, 22)
         Me.txtPromosi.TabIndex = 13
         '
         'txtHargaNet
         '
-        Me.txtHargaNet.Location = New System.Drawing.Point(409, 250)
+        Me.txtHargaNet.Location = New System.Drawing.Point(364, 200)
+        Me.txtHargaNet.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtHargaNet.Name = "txtHargaNet"
-        Me.txtHargaNet.Size = New System.Drawing.Size(144, 26)
+        Me.txtHargaNet.Size = New System.Drawing.Size(128, 22)
         Me.txtHargaNet.TabIndex = 14
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNavBarang, Me.btnNavPos, Me.btnNavLaporan})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(940, 28)
+        Me.MenuStrip1.TabIndex = 15
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'btnNavBarang
+        '
+        Me.btnNavBarang.Name = "btnNavBarang"
+        Me.btnNavBarang.Size = New System.Drawing.Size(70, 24)
+        Me.btnNavBarang.Text = "Barang"
+        '
+        'btnNavPos
+        '
+        Me.btnNavPos.Name = "btnNavPos"
+        Me.btnNavPos.Size = New System.Drawing.Size(81, 24)
+        Me.btnNavPos.Text = "Pos Kasir"
+        '
+        'btnNavLaporan
+        '
+        Me.btnNavLaporan.Name = "btnNavLaporan"
+        Me.btnNavLaporan.Size = New System.Drawing.Size(77, 24)
+        Me.btnNavLaporan.Text = "Laporan"
         '
         'FormBarang
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 20.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1058, 642)
+        Me.ClientSize = New System.Drawing.Size(940, 514)
         Me.Controls.Add(Me.txtHargaNet)
         Me.Controls.Add(Me.txtPromosi)
         Me.Controls.Add(Me.BtnRefresh)
@@ -194,10 +239,15 @@ Partial Class FormBarang
         Me.Controls.Add(Me.StokAwal)
         Me.Controls.Add(Me.NamaBarang)
         Me.Controls.Add(Me.KodeBarang)
+        Me.Controls.Add(Me.MenuStrip1)
+        Me.MainMenuStrip = Me.MenuStrip1
+        Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "FormBarang"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Manajemen Inventaris Gudang"
         CType(Me.DgvBarang, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -219,4 +269,8 @@ Partial Class FormBarang
     Friend WithEvents ImageList1 As ImageList
     Friend WithEvents txtPromosi As TextBox
     Friend WithEvents txtHargaNet As TextBox
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents btnNavBarang As ToolStripMenuItem
+    Friend WithEvents btnNavPos As ToolStripMenuItem
+    Friend WithEvents btnNavLaporan As ToolStripMenuItem
 End Class

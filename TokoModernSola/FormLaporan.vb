@@ -89,7 +89,35 @@ Public Class FormLaporan
                 CloseKoneksi()
             End Try
         End If
+    End Sub
+
+    Public Sub RefreshDetailLaporan()
+        ' KODE DATABASE ANDA DI SINI
+        ' Contoh: Tarik data transaksi terbaru dari database untuk memperbarui laporan
+        ' DataGridViewLaporan.DataSource = AmbilDataTransaksiTerbaru()
+        TampilkanNotaMaster()
+    End Sub
 
 
+    Private Sub btnNavBarang_Click(sender As Object, e As EventArgs) Handles btnNavBarang.Click
+        FormBarang.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNavPos_Click(sender As Object, e As EventArgs) Handles btnNavPos.Click
+        FormKasir.Show()
+        Me.Hide()
+    End Sub
+
+    Private Sub btnNavLaporan_Click(sender As Object, e As EventArgs) Handles btnNavLaporan.Click
+        Me.Hide()
+    End Sub
+
+    Private Sub FormLaporan_FormClosing(sender As Object, e As FormClosingEventArgs) Handles MyBase.FormClosing
+        Application.Exit()
+    End Sub
+
+    Private Sub FormLaporan_Activated(sender As Object, e As EventArgs) Handles MyBase.Activated
+        RefreshDetailLaporan()
     End Sub
 End Class

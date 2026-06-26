@@ -43,13 +43,18 @@ Partial Class FormKasir
         Me.btnEditKeranjang = New System.Windows.Forms.Button()
         Me.ImgTrashEdit = New System.Windows.Forms.ImageList(Me.components)
         Me.btnHapusKeranjang = New System.Windows.Forms.Button()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.btnNavBarang = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNavPos = New System.Windows.Forms.ToolStripMenuItem()
+        Me.btnNavLaporan = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
         'txtNota
         '
         Me.txtNota.Enabled = False
-        Me.txtNota.Location = New System.Drawing.Point(12, 21)
+        Me.txtNota.Location = New System.Drawing.Point(9, 81)
         Me.txtNota.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtNota.Multiline = True
         Me.txtNota.Name = "txtNota"
@@ -60,7 +65,7 @@ Partial Class FormKasir
         '
         Me.txtCariKode.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.txtCariKode.Font = New System.Drawing.Font("MV Boli", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtCariKode.Location = New System.Drawing.Point(12, 99)
+        Me.txtCariKode.Location = New System.Drawing.Point(9, 159)
         Me.txtCariKode.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtCariKode.Multiline = True
         Me.txtCariKode.Name = "txtCariKode"
@@ -71,7 +76,7 @@ Partial Class FormKasir
         '
         Me.txtNamaBarang.Enabled = False
         Me.txtNamaBarang.Font = New System.Drawing.Font("MV Boli", 16.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtNamaBarang.Location = New System.Drawing.Point(12, 240)
+        Me.txtNamaBarang.Location = New System.Drawing.Point(9, 300)
         Me.txtNamaBarang.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtNamaBarang.Multiline = True
         Me.txtNamaBarang.Name = "txtNamaBarang"
@@ -82,7 +87,7 @@ Partial Class FormKasir
         '
         Me.txtHarga.Enabled = False
         Me.txtHarga.Font = New System.Drawing.Font("MV Boli", 16.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtHarga.Location = New System.Drawing.Point(12, 350)
+        Me.txtHarga.Location = New System.Drawing.Point(9, 410)
         Me.txtHarga.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtHarga.Multiline = True
         Me.txtHarga.Name = "txtHarga"
@@ -92,7 +97,7 @@ Partial Class FormKasir
         'txtJumlah
         '
         Me.txtJumlah.Font = New System.Drawing.Font("MV Boli", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtJumlah.Location = New System.Drawing.Point(220, 99)
+        Me.txtJumlah.Location = New System.Drawing.Point(217, 159)
         Me.txtJumlah.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtJumlah.Multiline = True
         Me.txtJumlah.Name = "txtJumlah"
@@ -103,7 +108,7 @@ Partial Class FormKasir
         '
         Me.btnTambah.BackColor = System.Drawing.SystemColors.InactiveCaption
         Me.btnTambah.Font = New System.Drawing.Font("MV Boli", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnTambah.Location = New System.Drawing.Point(77, 488)
+        Me.btnTambah.Location = New System.Drawing.Point(74, 548)
         Me.btnTambah.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnTambah.Name = "btnTambah"
         Me.btnTambah.Size = New System.Drawing.Size(220, 124)
@@ -115,7 +120,7 @@ Partial Class FormKasir
         '
         Me.dgvKeranjang.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dgvKeranjang.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.colKode, Me.colNama, Me.colHarga, Me.colJumlah, Me.colSubTotal})
-        Me.dgvKeranjang.Location = New System.Drawing.Point(312, 21)
+        Me.dgvKeranjang.Location = New System.Drawing.Point(309, 81)
         Me.dgvKeranjang.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.dgvKeranjang.Name = "dgvKeranjang"
         Me.dgvKeranjang.RowHeadersWidth = 62
@@ -163,7 +168,7 @@ Partial Class FormKasir
         'txtBayar
         '
         Me.txtBayar.Font = New System.Drawing.Font("MV Boli", 18.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.txtBayar.Location = New System.Drawing.Point(1116, 178)
+        Me.txtBayar.Location = New System.Drawing.Point(1113, 238)
         Me.txtBayar.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.txtBayar.Multiline = True
         Me.txtBayar.Name = "txtBayar"
@@ -174,7 +179,7 @@ Partial Class FormKasir
         '
         Me.lblGrandTotal.AutoSize = True
         Me.lblGrandTotal.Font = New System.Drawing.Font("MV Boli", 20.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblGrandTotal.Location = New System.Drawing.Point(1108, 110)
+        Me.lblGrandTotal.Location = New System.Drawing.Point(1105, 170)
         Me.lblGrandTotal.Name = "lblGrandTotal"
         Me.lblGrandTotal.Size = New System.Drawing.Size(103, 45)
         Me.lblGrandTotal.TabIndex = 8
@@ -184,7 +189,7 @@ Partial Class FormKasir
         '
         Me.lblKembali.AutoSize = True
         Me.lblKembali.Font = New System.Drawing.Font("MV Boli", 20.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblKembali.Location = New System.Drawing.Point(1108, 289)
+        Me.lblKembali.Location = New System.Drawing.Point(1105, 349)
         Me.lblKembali.Name = "lblKembali"
         Me.lblKembali.Size = New System.Drawing.Size(99, 45)
         Me.lblKembali.TabIndex = 9
@@ -194,7 +199,7 @@ Partial Class FormKasir
         '
         Me.btnSimpanTransaksi.BackColor = System.Drawing.SystemColors.InactiveCaption
         Me.btnSimpanTransaksi.Font = New System.Drawing.Font("MV Boli", 14.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.btnSimpanTransaksi.Location = New System.Drawing.Point(1116, 355)
+        Me.btnSimpanTransaksi.Location = New System.Drawing.Point(1113, 415)
         Me.btnSimpanTransaksi.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.btnSimpanTransaksi.Name = "btnSimpanTransaksi"
         Me.btnSimpanTransaksi.Size = New System.Drawing.Size(253, 59)
@@ -206,7 +211,7 @@ Partial Class FormKasir
         '
         Me.btnEditKeranjang.ImageIndex = 1
         Me.btnEditKeranjang.ImageList = Me.ImgTrashEdit
-        Me.btnEditKeranjang.Location = New System.Drawing.Point(1111, 21)
+        Me.btnEditKeranjang.Location = New System.Drawing.Point(1108, 81)
         Me.btnEditKeranjang.Name = "btnEditKeranjang"
         Me.btnEditKeranjang.Size = New System.Drawing.Size(39, 35)
         Me.btnEditKeranjang.TabIndex = 11
@@ -224,12 +229,40 @@ Partial Class FormKasir
         Me.btnHapusKeranjang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft
         Me.btnHapusKeranjang.ImageIndex = 0
         Me.btnHapusKeranjang.ImageList = Me.ImgTrashEdit
-        Me.btnHapusKeranjang.Location = New System.Drawing.Point(1156, 21)
+        Me.btnHapusKeranjang.Location = New System.Drawing.Point(1153, 81)
         Me.btnHapusKeranjang.Name = "btnHapusKeranjang"
         Me.btnHapusKeranjang.Size = New System.Drawing.Size(42, 35)
         Me.btnHapusKeranjang.TabIndex = 12
         Me.btnHapusKeranjang.TextAlign = System.Drawing.ContentAlignment.MiddleRight
         Me.btnHapusKeranjang.UseVisualStyleBackColor = True
+        '
+        'MenuStrip1
+        '
+        Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
+        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnNavBarang, Me.btnNavPos, Me.btnNavLaporan})
+        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        Me.MenuStrip1.Name = "MenuStrip1"
+        Me.MenuStrip1.Size = New System.Drawing.Size(1478, 28)
+        Me.MenuStrip1.TabIndex = 13
+        Me.MenuStrip1.Text = "MenuStrip1"
+        '
+        'btnNavBarang
+        '
+        Me.btnNavBarang.Name = "btnNavBarang"
+        Me.btnNavBarang.Size = New System.Drawing.Size(70, 24)
+        Me.btnNavBarang.Text = "Barang"
+        '
+        'btnNavPos
+        '
+        Me.btnNavPos.Name = "btnNavPos"
+        Me.btnNavPos.Size = New System.Drawing.Size(81, 24)
+        Me.btnNavPos.Text = "Pos Kasir"
+        '
+        'btnNavLaporan
+        '
+        Me.btnNavLaporan.Name = "btnNavLaporan"
+        Me.btnNavLaporan.Size = New System.Drawing.Size(77, 24)
+        Me.btnNavLaporan.Text = "Laporan"
         '
         'FormKasir
         '
@@ -249,11 +282,15 @@ Partial Class FormKasir
         Me.Controls.Add(Me.txtNamaBarang)
         Me.Controls.Add(Me.txtCariKode)
         Me.Controls.Add(Me.txtNota)
+        Me.Controls.Add(Me.MenuStrip1)
+        Me.MainMenuStrip = Me.MenuStrip1
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "FormKasir"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Point Of Sales Cashier V1.0"
         CType(Me.dgvKeranjang, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.MenuStrip1.ResumeLayout(False)
+        Me.MenuStrip1.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -278,4 +315,8 @@ Partial Class FormKasir
     Friend WithEvents btnEditKeranjang As Button
     Friend WithEvents ImgTrashEdit As ImageList
     Friend WithEvents btnHapusKeranjang As Button
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents btnNavBarang As ToolStripMenuItem
+    Friend WithEvents btnNavPos As ToolStripMenuItem
+    Friend WithEvents btnNavLaporan As ToolStripMenuItem
 End Class
